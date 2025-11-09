@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance ERP – Student & Teacher Portal</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container row">
+      <div class="logo">
+        <div class="mark">UGI</div>
+        <div>UGIverse <span class="pill">Attendance ERP</span></div>
+      </div>
+      <div class="row">
+        <button class="btn ghost" id="navHomeBtn">Home</button>
+        <button class="btn ghost hide" id="navLogoutBtn">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- AUTH -->
+  <main class="auth-wrap" id="authPage">
+    <div class="auth">
+      <div class="illustration card">
+        <h1>Student & Teacher Portal</h1>
+        <p>Developed by <strong>UGIverse</strong></p> <p> Your whole college universe in one website </p>
+        <div style="height:16px"></div>
+        <div class="grid cols-2">
+          <div class="stat">
+            <div class="big" id="statStudents">0</div>
+            <div class="muted">Students</div>
+          </div>
+          <div class="stat">
+            <div class="big" id="statClasses">0</div>
+            <div class="muted">Classes</div>
+          </div>
+          <div class="stat">
+            <div class="big" id="statToday">0%</div>
+            <div class="muted">Today Present</div>
+          </div>
+          <div class="stat">
+            <div class="big" id="statRecords">0</div>
+            <div class="muted">Attendance Records</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h2 style="margin:0 0 8px 0">Login</h2>
+        <div class="grid">
+          <div class="field">
+            <label>Login as</label>
+            <div class="row">
+              <label class="row"><input type="radio" name="role" value="teacher" checked> &nbsp;Teacher</label>
+              <label class="row"><input type="radio" name="role" value="student"> &nbsp;Student</label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Email / ID</label>
+            <input class="input" id="loginId" placeholder="Enter email or ID" />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="row" style="width:100%">
+              <input class="input" id="loginPass" type="password" placeholder="Enter your password" style="flex:1" />
+              <button class="btn small" id="togglePass" type="button">Show</button>
+            </div>
+            <small style="color:var(--muted)"> <code></code>  <code></code></small>
+          </div>
+          <div class="row">
+            <button class="btn primary" id="loginBtn">Sign in</button>
+            <div class="right" id="loginMsg" style="color:var(--warning)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- DASHBOARD -->
+  <section class="container dash hide" id="dash">
+    <aside class="side card pad">
+      <div class="row" style="justify-content:space-between">
+        <div id="userName" style="font-weight:800">User</div>
+        <div class="pill" id="userRole">teacher</div>
+      </div>
+      <div class="nav" id="nav">
+        <div class="item active" data-target="teacherHome" id="navTeacherHome">Overview</div>
+        <div class="item" data-target="manageStudents" id="navManageStudents">Students</div>
+        <div class="item" data-target="takeAttendance" id="navTakeAttendance">Take Attendance</div>
+        <div class="item" data-target="reports" id="navReports">Reports</div>
+
+        <div class="item hide" data-target="studentHome" id="navStudentHome">My Attendance</div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn small right" id="logoutBtn">Logout</button>
+      </div>
+    </aside>
+
+    <main class="section">
+      <!-- TEACHER OVERVIEW -->
+      <div id="teacherHome" class="card pad">
+        <div class="row" style="justify-content:space-between; align-items:flex-end">
+          <div>
+            <h2 style="margin:0">Overview</h2>
+            <p style="margin:6px 0 0 0; color:var(--muted)">Quick stats for today: <span id="todayDate"></span></p>
+          </div>
+          <div class="row">
+            <button class="btn" id="seedBtn">Reset Demo Data</button>
+            <button class="btn primary" id="quickTakeBtn">Quick Take</button>
+          </div>
+        </div>
+        <div class="stats" style="margin-top:14px">
+          <div class="stat">
+            <div class="big" id="tStatStudents">0</div>
+            <div>Students</div>
+          </div>
+          <div class="stat">
+            <div class="big" id="tStatClasses">0</div>
+            <div>Classes</div>
+          </div>
+          <div class="stat">
+            <div class="big" id="tStatPresent">0%</div>
+            <div>Present Today</div>
+          </div>
+          <div class="stat">
+            <div class="big" id="tStatRecords">0</div>
+            <div>Total Records</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MANAGE STUDENTS -->
+      <div id="manageStudents" class="card pad hide">
+        <div class="row" style="justify-content:space-between; align-items:flex-end">
+          <div>
+            <h2 style="margin:0">Students</h2>
+            <p style="margin:6px 0 0 0; color:var(--muted)">Add, edit or remove students. Students can log in with their ID and password.</p>
+          </div>
+          <div class="row">
+            <input class="input" id="studentSearch" placeholder="Search by name, roll or class" />
+            <button class="btn" id="exportStudentsBtn">Export CSV</button>
+          </div>
+        </div>
+
+        <div class="grid cols-3" style="margin-top:12px">
+          <div class="field">
+            <label>Full Name</label>
+            <input class="input" id="sName" placeholder="Enter Student Name" />
+          </div>
+          <div class="field">
+            <label>Roll No.</label>
+            <input class="input" id="sRoll" placeholder="Enter Roll No" />
+          </div>
+          <div class="field">
+            <label>Class</label>
+            <input class="input" id="sClass" placeholder="Enter Class" />
+          </div>
+          <div class="field">
+            <label>Email (optional)</label>
+            <input class="input" id="sEmail" placeholder="Enter email" />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input class="input" id="sPass" placeholder="Set a password" />
+          </div>
+          <div class="field">
+            <label>&nbsp;</label>
+            <button class="btn success" id="addStudentBtn">Add Student</button>
+          </div>
+        </div>
+
+        <div class="card" style="padding:0; margin-top:12px">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Roll</th>
+                <th>Class</th>
+                <th>Email</th>
+                <th>ID</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="studentsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAKE ATTENDANCE -->
+      <div id="takeAttendance" class="card pad hide">
+        <div class="row" style="justify-content:space-between; align-items:flex-end">
+          <div>
+            <h2 style="margin:0">Take Attendance</h2>
+            <p style="margin:6px 0 0 0; color:var(--muted)">Select the date and mark students as Present/Absent.</p>
+          </div>
+          <div class="row">
+            <input class="input" id="attDate" type="date" />
+            <button class="btn" id="markAllPresentBtn">Mark All Present</button>
+            <button class="btn" id="clearMarksBtn">Clear</button>
+            <button class="btn primary" id="saveAttendanceBtn">Save</button>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:12px">
+          <select id="classFilter" class="input" style="max-width:220px">
+            <option value="">All Classes</option>
+          </select>
+          <input class="input" id="attSearch" placeholder="Filter by name / roll" />
+        </div>
+
+        <div class="card" style="padding:0; margin-top:12px">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Roll</th>
+                <th>Class</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="attTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- REPORTS -->
+      <div id="reports" class="card pad hide">
+        <div class="row" style="justify-content:space-between; align-items:flex-end">
+          <div>
+            <h2 style="margin:0">Reports</h2>
+            <p style="margin:6px 0 0 0; color:var(--muted)">Download attendance or view per-student summaries.</p>
+          </div>
+          <div class="row">
+            <input type="month" class="input" id="repMonth">
+            <button class="btn" id="exportAttendanceBtn">Export CSV</button>
+          </div>
+        </div>
+        <div class="card" style="padding:0; margin-top:12px">
+          <table>
+            <thead>
+              <tr>
+                <th>Student</th>
+                <th>Roll</th>
+                <th>Class</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Percentage</th>
+              </tr>
+            </thead>
+            <tbody id="repTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- STUDENT HOME -->
+      <div id="studentHome" class="card pad hide">
+        <div class="row" style="justify-content:space-between; align-items:flex-end">
+          <div>
+            <h2 style="margin:0">My Attendance</h2>
+            <p style="margin:6px 0 0 0; color:var(--muted)">Welcome, <span id="stuWelcome"></span> — your attendance overview.</p>
+          </div>
+          <div class="row">
+            <input type="month" id="stuMonth" class="input">
+            <button class="btn" id="stuExportBtn">Export My CSV</button>
+          </div>
+        </div>
+
+        <div class="stats" style="margin-top:14px">
+          <div class="stat">
+            <div class="big" id="stuPresent">0</div>
+            <div>Present</div>
+          </div>
+          <div class="stat">
+            <div class="big" id="stuAbsent">0</div>
+            <div>Absent</div>
+          </div>
+          <div class="stat">
+            <div class="big" id="stuPercent">0%</div>
+            <div>Percentage</div>
+          </div>
+          <div class="stat">
+            <div class="big" id="stuStreak">0</div>
+            <div>Current Streak (days)</div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:0; margin-top:12px">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="stuTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
