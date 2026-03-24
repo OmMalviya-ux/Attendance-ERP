@@ -44,9 +44,9 @@ function seedDemo(){
   // Teacher / admin accounts
   const users = [
     { id: 'T001', role:'teacher', email:'Jitendra Kumar', password:'teacher123', name:'Admin Jitendra Kumar', isAdmin: true },
-    { id: 'T002', role:'teacher', email:'Naman Jaiswal', password:'teacher123', name:'Admin Naman Jaiswal' },
-    { id: 'T003', role:'teacher', email:'Jyoti Srivastava', password:'teacher123', name:'Admin Jyoti Srivastava' },
-    { id: 'T004', role:'teacher', email:'Devendra Awasthi', password:'teacher123', name:'Admin Devendra Awasthi' }
+    { id: 'T002', role:'teacher', email:'Naman Jaiswal', password:'teacher123', name:'Naman Jaiswal' },
+    { id: 'T003', role:'teacher', email:'Jyoti Srivastava', password:'teacher123', name:'Jyoti Srivastava' },
+    { id: 'T004', role:'teacher', email:'Devendra Awasthi', password:'teacher123', name:'Devendra Awasthi' }
   ];
 
   // Students
